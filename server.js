@@ -7,7 +7,8 @@ const {
     userJoin,
     getCurrentUser,
     userLeave,
-    getRoomUsers
+    getRoomUsers,
+    getAllUsers
 } = require('./utils/users');
 
 const app = express();
@@ -21,6 +22,7 @@ const botName = 'ChatCord Bot';
 
 // Run when a client connects
 io.on('connection', (socket) => {
+    console.log('io connection backend');
     socket.on('joinRoom', ({ username, room }) => {
         const user = userJoin(socket.id, username, room);
 

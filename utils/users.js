@@ -9,6 +9,11 @@ function userJoin(id, username, room) {
     return user;
 }
 
+// Temporary: get all users
+function getAllUsers() {
+    return users;
+}
+
 // Get current user
 function getCurrentUser(id) {
     return users.find((user) => user.id === id);
@@ -30,5 +35,6 @@ module.exports = {
     userJoin,
     getCurrentUser,
     userLeave,
-    getRoomUsers
+    getRoomUsers,
+    getAllUsers
 };
