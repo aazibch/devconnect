@@ -1,12 +1,23 @@
-# ChatCord
+# DevConnect
 
-Realtime chat app with websockets using Node.js, Express and Socket.io with Vanilla JS on the frontend.
+A chat application built using Node.js, Express, and Socket.IO.
 
-This app is created while following [Brad Traversy's tutorial](https://www.youtube.com/watch?v=jD7FnbI76Hg&t=132s).
+The application allows users to:
 
-## Usage
+- Pick an identifier for themselves.
+- Join the desired chat room.
+- Communicate with fellow users in real-time.
 
-```
-npm install
-npm run dev
-```
+## Scripts
+
+Install dependencies:
+
+    npm install
+
+Run the server in development mode:
+
+    npm run dev
+
+Run the server in production mode:
+
+    npm start

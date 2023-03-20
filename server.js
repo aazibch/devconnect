@@ -4,11 +4,11 @@ const express = require('express');
 const socketio = require('socket.io');
 const formatMessage = require('./utils/messages');
 const {
-    userJoin,
-    getCurrentUser,
-    userLeave,
-    getRoomUsers,
-    getAllUsers
+  userJoin,
+  getCurrentUser,
+  userLeave,
+  getRoomUsers,
+  getAllUsers
 } = require('./utils/users');
 
 const app = express();
@@ -18,58 +18,58 @@ const io = socketio(server);
 // Set status folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-const botName = 'ChatCord Bot';
+const botName = 'DevConnect Bot';
 
 // Run when a client connects
 io.on('connection', (socket) => {
-    console.log('io connection backend');
-    socket.on('joinRoom', ({ username, room }) => {
-        const user = userJoin(socket.id, username, room);
+  console.log('[Websockets] Connection established...');
+  socket.on('joinRoom', ({ username, room }) => {
+    const user = userJoin(socket.id, username, room);
 
-        socket.join(user.room);
+    socket.join(user.room);
 
-        // Welcome current user
-        socket.emit('message', formatMessage(botName, 'Welcome to ChatCord!'));
+    // Welcome current user
+    socket.emit('message', formatMessage(botName, 'Welcome to DevConnect!'));
 
-        // Broadcast when a user connects
-        socket.broadcast
-            .to(user.room)
-            .emit(
-                'message',
-                formatMessage(botName, `${user.username} has joined the chat`)
-            );
+    // Broadcast when a user connects
+    socket.broadcast
+      .to(user.room)
+      .emit(
+        'message',
+        formatMessage(botName, `${user.username} has joined the chat`)
+      );
 
-        // Send users and room info
-        io.to(user.room).emit('roomUsers', {
-            room: user.room,
-            users: getRoomUsers(user.room)
-        });
+    // Send users and room info
+    io.to(user.room).emit('roomUsers', {
+      room: user.room,
+      users: getRoomUsers(user.room)
     });
+  });
 
-    // Listen for chatMessage
-    socket.on('chatMessage', (msg) => {
-        const user = getCurrentUser(socket.id);
+  // Listen for chatMessage
+  socket.on('chatMessage', (msg) => {
+    const user = getCurrentUser(socket.id);
 
-        io.to(user.room).emit('message', formatMessage(user.username, msg));
-    });
+    io.to(user.room).emit('message', formatMessage(user.username, msg));
+  });
 
-    // Runs when client disconnects
-    socket.on('disconnect', () => {
-        const user = userLeave(socket.id);
+  // Runs when client disconnects
+  socket.on('disconnect', () => {
+    const user = userLeave(socket.id);
 
-        if (user) {
-            io.to(user.room).emit(
-                'message',
-                formatMessage(botName, `${user.username} has left the chat`)
-            );
+    if (user) {
+      io.to(user.room).emit(
+        'message',
+        formatMessage(botName, `${user.username} has left the chat`)
+      );
 
-            // Send users and room info
-            io.to(user.room).emit('roomUsers', {
-                room: user.room,
-                users: getRoomUsers(user.room)
-            });
-        }
-    });
+      // Send users and room info
+      io.to(user.room).emit('roomUsers', {
+        room: user.room,
+        users: getRoomUsers(user.room)
+      });
+    }
+  });
 });
 
 const port = process.env.PORT || 3000;
