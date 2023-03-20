@@ -8,6 +8,10 @@ The application allows users to:
 - Join the desired chat room.
 - Communicate with fellow users in real-time.
 
+## Demo
+
+The application demo can be found at https://devconnect.up.railway.app/.
+
 ## Scripts
 
 Install dependencies:
