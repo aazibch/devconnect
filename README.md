@@ -10,7 +10,7 @@ The application allows users to:
 
 ## Demo
 
-The application demo can be found at https://devconnect.up.railway.app/.
+The application demo can be found at https://devconnect-8yps.onrender.com/.
 
 ## Scripts
 
